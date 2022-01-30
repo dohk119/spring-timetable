@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <html xmlns:th="http://www.thymeleaf.org"  
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:sec="http:://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Configuración horarios CXT</title>
+<!--
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}"/>
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+        <link href="css/styles.css" rel="stylesheet" />
+    -->
+        <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+     
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        
+    </head>
+    <body>
+
+        
+        <section th:fragment="coaches">
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">[[#{coaches.subtitle}]]</h1>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Coaches</li>
+                </ol>
+                
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        [[#{coaches.description}]]
+                    </div>
+                    <div class="card-body">
+                        
+                        <!-- Button and modal for add new coach form-->
+                        <section th:include="layout/addnewcoach"></section>
+                        
+                        <table id="datatablesSimple">
+                            <thead>
+                                <tr>
+                                    <th>[[#{coaches.tablehead.id}]]</th>
+                                    <th>[[#{coaches.tablehead.name}]]</th>
+                                    <th>[[#{coaches.tablehead.surname}]]</th>
+                                    <th>[[#{coaches.tablehead.edit}]]</th>
+                                    <th>[[#{coaches.tablehead.delete}]]</th>
+                                
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Surname</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <tr th:each="coach, counter : ${coaches}">
+                                    <td>[[${counter.count}]]</td>
+                                    <td>[[${coach.name}]]</td>
+                                    <td>[[${coach.surname}]]</td>
+                                    <td>
+                                        <a th:href="@{/config/coaches/} + ${coach.idCoach}"
+                                                    class="btn btn-primary">
+                                            <i class="fas fa-angle-double-right"></i> [[#{actions.edit}]]
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/config/delete/} + ${coach.idCoach}"
+                                                    class="btn btn-danger">
+                                            <i class="fas fa-angle-double-right"></i> [[#{actions.delete}]]
+                                        </a>
+                                    </td>                                 
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <!-- <script src="js/scripts.js"></script> -->
+        <script th:src="@{/js/scripts.js}"></script> 
+        <!-- <link rel="stylesheet" th:href="@{/css/styles.css}"/> -->
+    </body>
+</html>

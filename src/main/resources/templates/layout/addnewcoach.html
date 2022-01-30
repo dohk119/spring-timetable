@@ -1,0 +1,40 @@
+
+<section th:fragment="addnewcoach">
+
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    [[#{addnewcoach.addbutton}]]
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">[[#{addnewcoach.title}]]</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form th:action="@{/config/savecoach}" th:object="${coach}" method="POST" class="was-validated">
+        <div class="modal-body">
+            <div class="modal-body">
+                <div class="form-group" >
+                    <label for="name" th:text="#{coaches.tablehead.name}">Nombre</label>
+                    <input type="text" class="form-control" name="name" required="true">
+                </div>
+                <div class="form-group" >
+                    <label for="surname" th:text="#{coaches.tablehead.surname}">Apellido</label>
+                    <input type="text" class="form-control" name="surname" >
+                </div>
+            </div>
+ 
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">[[#{addnewcoach.close}]]</button>
+            <button type="submit" class="btn btn-primary">[[#{addnewcoach.save}]]</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
