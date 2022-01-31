@@ -1,7 +1,11 @@
 package com.dcc.timetable.controller;
 
+import com.dcc.timetable.dao.CoachDao;
 import com.dcc.timetable.domain.Coach;
+import com.dcc.timetable.domain.Group;
 import com.dcc.timetable.service.CoachService;
+import com.dcc.timetable.service.GroupService;
+import com.dcc.timetable.service.LocationService;
 
 import javax.validation.Valid;
 
@@ -14,6 +18,8 @@ import org.springframework.validation.Errors;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @Slf4j
@@ -25,6 +31,10 @@ public class MainController {
 
     @Autowired 
     private CoachService coachService;
+    @Autowired
+    private GroupService groupService;
+    @Autowired
+    private LocationService locationService;
 
     //Map to index
     @GetMapping("/")
@@ -68,6 +78,14 @@ public class MainController {
             
     }
 
+    @GetMapping("/config/coaches/{idCoach}")
+    public String editCoach(Coach coach, Model model) {
+        coach = coachService.findCoach(coach);
+        model.addAttribute("coach", coach);
+        return "modifycoach";
+    }
+
+
     @PostMapping("/config/savecoach")
     public String saveCoach(@Valid Coach coach, Errors errors){
 
@@ -78,9 +96,68 @@ public class MainController {
         coachService.save(coach);
         return "redirect:/config/coaches";
     }
-  
-   
 
+
+    @GetMapping("/config/coaches/delete/{idCoach}")
+    public String deleteCoach(Coach coach){
+
+        coachService.delete(coach);
+        return "redirect:/config/coaches";
+
+    }
+
+    //Groups mapping
+
+    @GetMapping("/config/groups")
+    public String configGroups(Model model){
+        var groups = groupService.listGroups();
+
+        model.addAttribute("groups", groups);
+        model.addAttribute("section","groups");     //Used for section loading
+        log.info("Dentro de Groups");
+        return "config";
+        
+    }
+
+    @PostMapping("/config/savegroup")
+    public String saveGroup(@Valid Group group, Errors errors){
+
+        if(errors.hasErrors()){
+            log.info("Errors founded!!!");
+        }
+
+        groupService.save(group);
+        return "redirect:/config/groups";
+    }
+
+    @GetMapping("/config/groups/{idGroup}")
+    public String editCoach(Group group, Model model) {
+        group = groupService.findGroup(group);
+        model.addAttribute("group", group);
+        return "modifygroup";
+    }
+
+    @GetMapping("/config/groups/delete/{idGroup}")
+    public String deleteCoach(Group group){
+
+        groupService.delete(group);
+        return "redirect:/config/groups";
+
+    }
+  
+   //Locations
+
+
+   @GetMapping("/config/locations")
+   public String configLocations(Model model){
+       var locations = locationService.listLocations();
+
+       model.addAttribute("locations", locations);
+       model.addAttribute("section","locations");     //Used for section loading
+       log.info("Dentro de Locations");
+       return "config";
+       
+   }
 
     
 }

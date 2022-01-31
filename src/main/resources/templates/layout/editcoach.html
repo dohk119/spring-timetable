@@ -1,0 +1,35 @@
+<section th:fragment="editcoach">
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">[[#{coaches.subtitle}]]</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+            <li class="breadcrumb-item active">Coaches</li>
+        </ol>
+        <form th:action="@{/config/savecoach}" th:object="${coach}" method="POST" class="was-validated">
+            <input type="hidden" name="idCoach" th:field="*{idCoach}">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    [[#{actions.edit}]]
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="nombre">[[#{coaches.tablehead.name}]]</label>
+                        <input type="text" class="form-control" name="name" required="true" th:field="*{name}" />
+                    </div>
+                    <div class="form-group">
+                        <label for="apellido">[[#{coaches.tablehead.surname}]]</label>
+                        <input type="text" class="form-control" name="apellido" required="false"
+                            th:field="*{surname}" />
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-secondary"
+                        data-bs-dismiss="modal">[[#{addnewcoach.close}]]</button>
+                    <button type="submit" class="btn btn-primary">[[#{addnewcoach.save}]]</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</section>

@@ -8,19 +8,18 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "coaches")
-public class Coach implements Serializable{
+@Table(name = "ggroups")
+public class Group implements Serializable{
 
     private static final Long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCoach;
+    private Long idGroup;
 
     @NotEmpty
     private String name;
 
-    private String surname;
-
+    private Integer id_location;
     
 }
