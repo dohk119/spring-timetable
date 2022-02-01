@@ -112,12 +112,12 @@ public class MainController {
     public String configGroups(Model model){
         var groups = groupService.listGroups();
 
-        /*
+       /* 
         for(Group gr : groups){
             log.info(gr.getLocation().toString());
         }
-*/
 
+*/
         model.addAttribute("groups", groups);
         model.addAttribute("section","groups");     //Used for section loading
         log.info("Dentro de Groups");
@@ -138,7 +138,9 @@ public class MainController {
 
     @GetMapping("/config/groups/{idGroup}")
     public String editCoach(Group group, Model model) {
+        var locations = locationService.listLocations();
         group = groupService.findGroup(group);
+        model.addAttribute("locations", locations);
         model.addAttribute("group", group);
         return "modifygroup";
     }
