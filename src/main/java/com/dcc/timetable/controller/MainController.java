@@ -112,6 +112,12 @@ public class MainController {
     public String configGroups(Model model){
         var groups = groupService.listGroups();
 
+        /*
+        for(Group gr : groups){
+            log.info(gr.getLocation().toString());
+        }
+*/
+
         model.addAttribute("groups", groups);
         model.addAttribute("section","groups");     //Used for section loading
         log.info("Dentro de Groups");
