@@ -19,17 +19,11 @@
                     </div>
                     <div class="form-group">
                         <label for="location">[[#{groups.tablehead.location}]]</label>
-                        <!-- 
-                            th:each="group, counter : ${groups}"
-                        -->
                         <select class="form-select" aria-label="Default select example" th:field="*{location}">
-                            <option th:each="location : ${locations}" th:selected="${group.location.idLocation} == ${location.idLocation}"
+                            <option value="">---</option>
+                            <option th:each="location : ${locations}" th:selected="${group?.location?.idLocation} == ${location?.idLocation}"
                             th:value="${location.idLocation}">[[${location.name}]]</option>
-                          
                           </select>
-                      <!--  <input type="text" class="form-control" name="location" required="false"
-                            th:field="*{location}" />
-                      -->
                     </div>
                 </div>
                 <div class="card-footer">

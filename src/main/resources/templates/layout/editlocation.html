@@ -1,0 +1,29 @@
+<section th:fragment="editlocation">
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">[[#{locations.tablehead.name}]]</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+            <li class="breadcrumb-item active">[[#{locations.subtitle}]]</li>
+        </ol>
+        <form th:action="@{/config/savelocation}" th:object="${location}" method="POST" class="was-validated">
+            <input type="hidden" name="idLocation" th:field="*{idLocation}">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    [[#{actions.edit}]]
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="name">[[#{locations.tablehead.name}]]</label>
+                        <input type="text" class="form-control" name="name" required="true" th:field="*{name}" />
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="/config/locations" class="btn btn-secondary" role="button">[[#{actions.close}]]</a>
+                    <button type="submit" class="btn btn-primary">[[#{actions.save}]]</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</section>

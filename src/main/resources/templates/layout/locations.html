@@ -3,7 +3,7 @@
         <h1 class="mt-4">[[#{locations.subtitle}]]</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-            <li class="breadcrumb-item active">[#{locations.description}]]</li>
+            <li class="breadcrumb-item active">[[#{locations.subtitle}]]</li>
         </ol>
         
         <div class="card mb-4">
@@ -14,7 +14,7 @@
             <div class="card-body">
                 
                 <!-- Button and modal for add new coach form-->
-                <section th:include="layout/addnewgroup"></section>
+                <section th:include="layout/addnewlocation"></section>
                 
                 <table id="datatablesSimple">
                     <thead>
@@ -37,7 +37,6 @@
                         <tr th:each="location, counter : ${locations}">
                             <td>[[${counter.count}]]</td>
                             <td>[[${location.name}]]</td>
-                            <td></td>
                             <td>
                                 <a th:href="@{/config/locations/} + ${location.idLocation}"
                                             class="btn btn-primary">

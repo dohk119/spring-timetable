@@ -1,11 +1,12 @@
 package com.dcc.timetable.controller;
 
 import com.dcc.timetable.dao.CoachDao;
-import com.dcc.timetable.domain.Coach;
-import com.dcc.timetable.domain.Group;
+import com.dcc.timetable.domain.*;
 import com.dcc.timetable.service.CoachService;
 import com.dcc.timetable.service.GroupService;
 import com.dcc.timetable.service.LocationService;
+import com.dcc.timetable.service.ZoneService;
+
 
 import javax.validation.Valid;
 
@@ -35,6 +36,8 @@ public class MainController {
     private GroupService groupService;
     @Autowired
     private LocationService locationService;
+    @Autowired
+    private ZoneService zoneService;
 
     //Map to index
     @GetMapping("/")
@@ -110,14 +113,10 @@ public class MainController {
 
     @GetMapping("/config/groups")
     public String configGroups(Model model){
+
+        var locations = locationService.listLocations();    //Load locations for the select in the modal add form
         var groups = groupService.listGroups();
-
-       /* 
-        for(Group gr : groups){
-            log.info(gr.getLocation().toString());
-        }
-
-*/
+        model.addAttribute("locations", locations);
         model.addAttribute("groups", groups);
         model.addAttribute("section","groups");     //Used for section loading
         log.info("Dentro de Groups");
@@ -142,7 +141,8 @@ public class MainController {
         group = groupService.findGroup(group);
         model.addAttribute("locations", locations);
         model.addAttribute("group", group);
-        return "modifygroup";
+        model.addAttribute("section","editgroup");     //Used for section loading
+        return "config";
     }
 
     @GetMapping("/config/groups/delete/{idGroup}")
@@ -153,8 +153,7 @@ public class MainController {
 
     }
   
-   //Locations
-
+   //Locations 
 
    @GetMapping("/config/locations")
    public String configLocations(Model model){
@@ -166,6 +165,75 @@ public class MainController {
        return "config";
        
    }
+
+   @GetMapping("/config/locations/{idLocation}")
+   public String editLocation(Location location, Model model){
+
+        location = locationService.findLocation(location);
+        model.addAttribute("location", location);
+        model.addAttribute("section", "editlocation");
+        return "config";
+   }
+
+   @PostMapping("/config/savelocation")
+    public String saveGroup(@Valid Location location, Errors errors){
+
+        if(errors.hasErrors()){
+            log.info("Errors founded!!!");
+        }
+
+        locationService.save(location);
+        return "redirect:/config/locations";
+    }
+
+    @GetMapping("/config/locations/delete/{idLocation}")
+    public String deleteLocation(Location location){
+
+        locationService.delete(location);
+        return "redirect:/config/locations";
+
+    }
+
+    //Zones
+
+    @GetMapping("/config/zones")
+    public String configZones(Model model){
+        var zones = zoneService.listZones();
+
+        model.addAttribute("zones", zones);
+        model.addAttribute("section","zones");     //Used for section loading
+        log.info("Dentro de Zones");
+        return "config";
+       
+    }
+
+    @GetMapping("/config/zones/{idZone}")
+    public String editZone(Zone zone, Model model){
+
+        zone = zoneService.findZone(zone);
+        model.addAttribute("zone", zone);
+        model.addAttribute("section", "editzone");
+        return "config";
+    }
+
+   @PostMapping("/config/savezone")
+    public String saveZone(@Valid Zone zone, Errors errors){
+
+        if(errors.hasErrors()){
+            log.info("Errors founded!!!");
+        }
+
+        zoneService.save(zone);
+        return "redirect:/config/zones";
+    }
+
+    @GetMapping("/config/zones/delete/{idZone}")
+    public String deleteZone(Zone zone){
+
+        zoneService.delete(zone);
+        return "redirect:/config/zones";
+
+    }
 
     
 }

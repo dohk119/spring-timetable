@@ -17,7 +17,9 @@ import org.springframework.stereotype.Repository;
 public interface GroupDao extends JpaRepository<Group,Long>{
 
     //Solve N + 1 on select
-    @Query("select c from Group c join fetch c.location")
+    //@Query("select c from Group c join fetch c.location")
+    @Query("select c from Group c left join  c.location")
+
     List<Group> findAll();
 
 }

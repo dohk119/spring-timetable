@@ -1,0 +1,58 @@
+<section th:fragment="zones">
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">[[#{zones.subtitle}]]</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+            <li class="breadcrumb-item active">[[#{zones.subtitle}]]</li>
+        </ol>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                [[#{zones.description}]]
+            </div>
+            <div class="card-body">
+                
+                <!-- Button and modal for add new coach form-->
+                <section th:include="layout/addnewzone"></section>
+                
+                <table id="datatablesSimple">
+                    <thead>
+                        <tr>
+                            <th>[[#{zones.tablehead.id}]]</th>
+                            <th>[[#{zones.tablehead.name}]]</th>
+                            <th>[[#{actions.edit}]]</th>
+                            <th>[[#{actions.delete}]]</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>[[#{zones.tablehead.id}]]</th>
+                            <th>[[#{zones.tablehead.name}]]</th>
+                            <th>[[#{actions.edit}]]</th>
+                            <th>[[#{actions.delete}]]</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr th:each="zone, counter : ${zones}">
+                            <td>[[${counter.count}]]</td>
+                            <td>[[${zone.name}]]</td>
+                            <td>
+                                <a th:href="@{/config/zones/} + ${zone.idZone}"
+                                            class="btn btn-primary">
+                                    <i class="fas fa-angle-double-right"></i> [[#{actions.edit}]]
+                                </a>
+                            </td>
+                            <td>
+                                <a th:href="@{/config/zones/delete/} + ${zone.idZone}"
+                                            class="btn btn-danger">
+                                    <i class="fas fa-angle-double-right"></i> [[#{actions.delete}]]
+                                </a>
+                            </td>                                 
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

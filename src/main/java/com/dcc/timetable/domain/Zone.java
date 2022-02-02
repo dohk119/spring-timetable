@@ -9,25 +9,18 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "locations")
-public class Location implements Serializable{
+@Table(name = "zones")
+public class Zone implements Serializable{
 
     private static final Long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idLocation;
+    private Long idZone;
 
     @NotEmpty
-    @Column(name = "location_name")
+    @Column(name = "zone_name")
     private String name;
 
-
-    public String getName(){
-        return name;
-    }
-
-    public String toString(){
-        return name;
-    }
+    
 }

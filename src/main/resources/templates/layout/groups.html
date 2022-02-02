@@ -39,7 +39,7 @@
                         <tr th:each="group, counter : ${groups}">
                             <td>[[${counter.count}]]</td>
                             <td>[[${group.name}]]</td>
-                            <td>[[${group.location.name}]]</td>
+                            <td>[[${group?.location?.name}]]</td>
                             <td>
                                 <a th:href="@{/config/groups/} + ${group.idGroup}"
                                             class="btn btn-primary">
