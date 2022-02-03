@@ -1,0 +1,74 @@
+<section th:fragment="addnewschelude">
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        [[#{scheludes.addbutton}]]
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">[[#{scheludes.addtitle}]]</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form th:action="@{/config/saveschelude}" th:object="${schelude}" method="POST" class="was-validated">
+                    <div class="modal-body">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="start_at" th:text="#{scheludes.tablehead.start}">Nombre</label>
+                                <input type="time" class="form-control" name="start_at" required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="end_at" th:text="#{scheludes.tablehead.end}">Nombre</label>
+                                <input type="time" class="form-control" name="end_at" required="true">
+                            </div>
+                            <div class="form-group">
+                                <label for="day_of_week" th:text="#{scheludes.tablehead.day}">Nombre</label>
+                                <select class="form-select" aria-label="Day of week" name="day_of_week">
+                                    <!-- <option disabled="disabled" selected>Día de la semana</option>-->
+                                    <option value="1">[[#{days.monday}]]</option>
+                                    <option value="2">[[#{days.tuesday}]]</option>
+                                    <option value="3">[[#{days.thursday}]]</option>
+                                    <option value="4">[[#{days.wednesday}]]</option>
+                                    <option value="5">[[#{days.friday}]]</option>
+                                    <option value="6">[[#{days.saturday}]]</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="week" th:text="#{scheludes.tablehead.week}">Nombre</label>
+                                <select class="form-select" aria-label="Day of week" name="week">
+                                   <!--  <option disabled="disabled" selected>Semana</option>-->
+                                    <option value="1">[[#{week.first}]]</option>
+                                    <option value="2">[[#{week.second}]]</option>
+                                    <option value="3">[[#{week.third}]]</option>
+                                    <option value="4">[[#{week.fourth}]]</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="zone">[[#{scheludes.tablehead.zone}]]</label>
+                                <select class="form-select" aria-label="Default select example" name="zone" >
+                                    <!-- <option value="">---</option> -->
+                                    <option th:each="zone : ${zones}" th:value="${zone.idZone}">[[${zone.name}]]</option>
+                                  </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="group">[[#{scheludes.tablehead.group}]]</label>
+                                <select class="form-select" aria-label="Default select example" name="group" >
+                                    <!-- <option value="">---</option> -->
+                                    <option th:each="group : ${groups}" th:value="${group.idGroup}">[[${group.name}]]</option>
+                                  </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">[[#{actions.close}]]</button>
+                        <button type="submit" class="btn btn-primary">[[#{actions.save}]]</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

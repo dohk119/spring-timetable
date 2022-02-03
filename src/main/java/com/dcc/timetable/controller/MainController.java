@@ -5,6 +5,7 @@ import com.dcc.timetable.domain.*;
 import com.dcc.timetable.service.CoachService;
 import com.dcc.timetable.service.GroupService;
 import com.dcc.timetable.service.LocationService;
+import com.dcc.timetable.service.ScheludeService;
 import com.dcc.timetable.service.ZoneService;
 
 
@@ -38,6 +39,8 @@ public class MainController {
     private LocationService locationService;
     @Autowired
     private ZoneService zoneService;
+    @Autowired
+    private ScheludeService scheludeService;
 
     //Map to index
     @GetMapping("/")
@@ -233,6 +236,36 @@ public class MainController {
         zoneService.delete(zone);
         return "redirect:/config/zones";
 
+    }
+
+
+    //Mapping scheludes
+
+    @GetMapping("/config/scheludes")
+    public String configScheludes(Model model){
+        var scheludes = scheludeService.listScheludes();
+        var zones = zoneService.listZones();
+        var groups = groupService.listGroups();
+
+        model.addAttribute("scheludes", scheludes);
+        model.addAttribute("zones", zones);
+        model.addAttribute("groups", groups);
+        model.addAttribute("section","scheludes");     //Used for section loading
+        log.info("Dentro de Scheludes");
+        return "config";
+       
+    }
+
+    @PostMapping("/config/saveschelude")
+    public String saveSchelude(@Valid Schelude schelude, Errors errors){
+
+        if(errors.hasErrors()){
+            log.info("Errors founded!!!");
+        }
+
+
+        scheludeService.save(schelude);
+        return "redirect:/config/scheludes";
     }
 
     
