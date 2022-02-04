@@ -70,4 +70,14 @@ public class Schelude implements Serializable {
         this.end_at = Time.valueOf(temp);
     }
 
+    //Returns the java.sql.Time as string with format HH:mm
+    public String getStart_at(){
+       
+        return start_at.toString().substring(0, 5);
+    }
+
+    public String getEnd_at(){
+        return this.end_at.toString().substring(0,5);
+    }
+
 }

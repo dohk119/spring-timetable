@@ -1,0 +1,60 @@
+<section th:fragment="editschelude">
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">[[#{scheludes.tablehead.name}]]</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+            <li class="breadcrumb-item active">[[#{scheludes.subtitle}]]</li>
+        </ol>
+        <form th:action="@{/config/saveschelude}" th:object="${schelude}" method="POST" class="was-validated">
+            <input type="hidden" name="idSchelude" th:field="*{idSchelude}">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    [[#{actions.edit}]]
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="start_at" th:text="#{scheludes.tablehead.start}">Nombre</label>
+                        <input type="time" class="form-control" name="start_at" th:field="*{start_at}" required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="end_at" th:text="#{scheludes.tablehead.end}">Nombre</label>
+                        <input type="time" class="form-control" name="end_at" th:field="*{end_at}" required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="week" th:text="#{scheludes.tablehead.week}">Nombre</label>
+                        <select class="form-select" aria-label="Day of week" name="week" th:field="*{week}">
+                           <!--  <option disabled="disabled" selected>Semana</option>-->
+                            <option value="1">[[#{week.first}]]</option>
+                            <option value="2">[[#{week.second}]]</option>
+                            <option value="3">[[#{week.third}]]</option>
+                            <option value="4">[[#{week.fourth}]]</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="zone">[[#{scheludes.tablehead.zone}]]</label>
+                        <select class="form-select" aria-label="Default select example" name="zone" th:field="*{zone}">
+                            <!-- <option value="">---</option> -->
+                            <option th:each="zone : ${zones}" th:value="${zone.idZone}" 
+                            th:selected="${schelude?.zone?.idZone} == ${zone?.idZone}">[[${zone.name}]]</option>
+                          </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="group">[[#{scheludes.tablehead.group}]]</label>
+                        <select class="form-select" aria-label="Default select example" name="group" th:field="*{group}">
+                            <!-- <option value="">---</option> -->
+                            <option th:each="group : ${groups}" th:value="${group.idGroup}"
+                            th:selected="${schelude?.group?.idGroup} == ${group?.idGroup}">[[${group.name}]]</option>
+                          </select>
+                    </div>
+                </div>
+                </div>
+                <div class="card-footer">
+                    <a href="/config/scheludes" class="btn btn-secondary" role="button">[[#{actions.close}]]</a>
+                    <button type="submit" class="btn btn-primary">[[#{actions.save}]]</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</section>

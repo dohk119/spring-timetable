@@ -256,6 +256,19 @@ public class MainController {
        
     }
 
+    @GetMapping("/config/scheludes/{idSchelude}")
+    public String editSchelude(Schelude schelude, Model model){
+
+        schelude = scheludeService.findSchelude(schelude);
+        var zones = zoneService.listZones();
+        var groups = groupService.listGroups();
+        model.addAttribute("schelude", schelude);
+        model.addAttribute("zones", zones);
+        model.addAttribute("groups", groups);
+        model.addAttribute("section", "editschelude");
+        return "config";
+    }
+
     @PostMapping("/config/saveschelude")
     public String saveSchelude(@Valid Schelude schelude, Errors errors){
 
@@ -267,6 +280,17 @@ public class MainController {
         scheludeService.save(schelude);
         return "redirect:/config/scheludes";
     }
+
+    
+    @GetMapping("/config/scheludes/delete/{idSchelude}")
+    public String deleteSchelude(Schelude schelude){
+
+        scheludeService.delete(schelude);
+        return "redirect:/config/scheludes";
+
+    }
+
+
 
     
 }
