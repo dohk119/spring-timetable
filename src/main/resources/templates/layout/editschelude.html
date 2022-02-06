@@ -14,12 +14,43 @@
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="start_at" th:text="#{scheludes.tablehead.start}">Nombre</label>
-                        <input type="time" class="form-control" name="start_at" th:field="*{start_at}" required="true">
+                        <label for="group">[[#{scheludes.tablehead.group}]]</label>
+                  
+                        <select class="form-select" aria-label="Default select example" name="group" th:field="*{group}">
+                            <!-- <option value="">---</option> -->
+                            <option th:each="group : ${groups}" th:value="${group.idGroup}"
+                            th:selected="${schelude?.group?.idGroup} == ${group?.idGroup}">[[${group.name}]]</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="end_at" th:text="#{scheludes.tablehead.end}">Nombre</label>
-                        <input type="time" class="form-control" name="end_at" th:field="*{end_at}" required="true">
+                        <label for="coach">[[#{scheludes.tablehead.coach}]]</label>
+                        <select class="form-select" aria-label="Default select example" name="coach" th:field="*{coach}">
+                            <!-- <option value="">---</option> -->
+                            <option th:each="coach : ${coaches}" th:value="${coach.idCoach}"
+                            th:selected="${schelude?.coach?.idCoach} == ${coach?.idCoach}">[[${coach.name}]]</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="zone">[[#{scheludes.tablehead.zone}]]</label>
+                        <select class="form-select" aria-label="Default select example" name="zone" th:field="*{zone}">
+                            <!-- <option value="">---</option> -->
+                            <option th:each="zone : ${zones}" th:value="${zone.idZone}" 
+                            th:selected="${schelude?.zone?.idZone} == ${zone?.idZone}">[[${zone.name}]]</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="day_of_week" th:text="#{scheludes.tablehead.day}">Nombre</label>
+                        <select class="form-select" aria-label="Day of week" name="day_of_week"
+                        th:field="*{day_of_week}">
+                            <!-- <option disabled="disabled" selected>Día de la semana</option>-->
+                            <option value="0">[[#{days.monday}]]</option>
+                            <option value="1">[[#{days.tuesday}]]</option>
+                            <option value="2">[[#{days.thursday}]]</option>
+                            <option value="3">[[#{days.wednesday}]]</option>
+                            <option value="4">[[#{days.friday}]]</option>
+                            <option value="5">[[#{days.saturday}]]</option>
+                            <option value="6">[[#{days.sunday}]]</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="week" th:text="#{scheludes.tablehead.week}">Nombre</label>
@@ -32,21 +63,14 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="zone">[[#{scheludes.tablehead.zone}]]</label>
-                        <select class="form-select" aria-label="Default select example" name="zone" th:field="*{zone}">
-                            <!-- <option value="">---</option> -->
-                            <option th:each="zone : ${zones}" th:value="${zone.idZone}" 
-                            th:selected="${schelude?.zone?.idZone} == ${zone?.idZone}">[[${zone.name}]]</option>
-                          </select>
+                        <label for="start_at" th:text="#{scheludes.tablehead.start}">Nombre</label>
+                        <input type="time" class="form-control" name="start_at" th:field="*{start_at}" required="true">
                     </div>
                     <div class="form-group">
-                        <label for="group">[[#{scheludes.tablehead.group}]]</label>
-                        <select class="form-select" aria-label="Default select example" name="group" th:field="*{group}">
-                            <!-- <option value="">---</option> -->
-                            <option th:each="group : ${groups}" th:value="${group.idGroup}"
-                            th:selected="${schelude?.group?.idGroup} == ${group?.idGroup}">[[${group.name}]]</option>
-                          </select>
+                        <label for="end_at" th:text="#{scheludes.tablehead.end}">Nombre</label>
+                        <input type="time" class="form-control" name="end_at" th:field="*{end_at}" required="true">
                     </div>
+                   
                 </div>
                 </div>
                 <div class="card-footer">

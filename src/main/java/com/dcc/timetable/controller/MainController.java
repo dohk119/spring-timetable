@@ -246,10 +246,12 @@ public class MainController {
         var scheludes = scheludeService.listScheludes();
         var zones = zoneService.listZones();
         var groups = groupService.listGroups();
+        var coaches = coachService.listCoaches();
 
         model.addAttribute("scheludes", scheludes);
         model.addAttribute("zones", zones);
         model.addAttribute("groups", groups);
+        model.addAttribute("coaches", coaches);
         model.addAttribute("section","scheludes");     //Used for section loading
         log.info("Dentro de Scheludes");
         return "config";
@@ -262,9 +264,11 @@ public class MainController {
         schelude = scheludeService.findSchelude(schelude);
         var zones = zoneService.listZones();
         var groups = groupService.listGroups();
+        var coaches = coachService.listCoaches();
         model.addAttribute("schelude", schelude);
         model.addAttribute("zones", zones);
         model.addAttribute("groups", groups);
+        model.addAttribute("coaches", coaches);
         model.addAttribute("section", "editschelude");
         return "config";
     }
@@ -289,6 +293,7 @@ public class MainController {
         return "redirect:/config/scheludes";
 
     }
+
 
 
 

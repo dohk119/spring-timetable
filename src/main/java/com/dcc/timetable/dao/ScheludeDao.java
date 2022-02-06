@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface ScheludeDao extends JpaRepository<Schelude,Long>{
 
     //Prevent N+1 queries
-    @Query("select c from Schelude c join fetch c.zone join fetch c.group")
+    @Query("select c from Schelude c join fetch c.zone join fetch c.group left join  c.coach")
     List<Schelude> findAll();
 
     

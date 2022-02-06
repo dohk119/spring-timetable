@@ -16,18 +16,22 @@
                 <!-- Button and modal for add new coach form-->
                 
                 <section th:include="layout/addnewschelude"></section>
+                <!-- 
+                <section th:include="layout/selectcoach"></section>
+                -->
 
                 
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
                             <th>[[#{scheludes.tablehead.id}]]</th>
-                            <th>[[#{scheludes.tablehead.start}]]</th>
-                            <th>[[#{scheludes.tablehead.end}]]</th>
+                            <th>[[#{scheludes.tablehead.group}]]</th>
                             <th>[[#{scheludes.tablehead.day}]]</th>
                             <th>[[#{scheludes.tablehead.week}]]</th>
+                            <th>[[#{scheludes.tablehead.start}]]</th>
+                            <th>[[#{scheludes.tablehead.end}]]</th>
                             <th>[[#{scheludes.tablehead.zone}]]</th>
-                            <th>[[#{scheludes.tablehead.group}]]</th>
+                            <th>[[#{scheludes.tablehead.coach}]]</th>
                             <th>[[#{actions.edit}]]</th>
                             <th>[[#{actions.delete}]]</th>
                         </tr>
@@ -35,12 +39,13 @@
                     <tfoot>
                         <tr>
                             <th>[[#{scheludes.tablehead.id}]]</th>
-                            <th>[[#{scheludes.tablehead.start}]]</th>
-                            <th>[[#{scheludes.tablehead.end}]]</th>
+                            <th>[[#{scheludes.tablehead.group}]]</th>
                             <th>[[#{scheludes.tablehead.day}]]</th>
                             <th>[[#{scheludes.tablehead.week}]]</th>
+                            <th>[[#{scheludes.tablehead.start}]]</th>
+                            <th>[[#{scheludes.tablehead.end}]]</th>
                             <th>[[#{scheludes.tablehead.zone}]]</th>
-                            <th>[[#{scheludes.tablehead.group}]]</th>
+                            <th>[[#{scheludes.tablehead.coach}]]</th>
                             <th>[[#{actions.edit}]]</th>
                             <th>[[#{actions.delete}]]</th>
                         </tr>
@@ -48,12 +53,22 @@
                     <tbody>
                         <tr th:each="schelude, counter : ${scheludes}">
                             <td>[[${counter.count}]]</td>
+                            <td>[[${schelude.group.name}]]</td>
+                            <!-- <td>[[${schelude.day_of_week}]]</td>-->
+                            <td th:switch="${schelude.day_of_week}">
+                                <span th:case="0">[[#{days.monday}]]</span>
+                                <span th:case="1">[[#{days.tuesday}]]</span>
+                                <span th:case="2">[[#{days.thursday}]]</span>
+                                <span th:case="3">[[#{days.wednesday}]]</span>
+                                <span th:case="4">[[#{days.friday}]]</span>
+                                <span th:case="5">[[#{days.saturday}]]</span>
+                                <span th:case="6">[[#{days.sunday}]]</span>
+                            </td>
+                            <td>[[${schelude.week}]]</td>
                             <td>[[${schelude.start_at}]]</td>
                             <td>[[${schelude.end_at}]]</td>
-                            <td>[[${schelude.day_of_week}]]</td>
-                            <td>[[${schelude.week}]]</td>
                             <td>[[${schelude.zone.name}]]</td>
-                            <td>[[${schelude.group.name}]]</td>
+                            <td>[[${schelude?.coach?.name}]]</td>
                             <td>
                                 <a th:href="@{/config/scheludes/} + ${schelude.idSchelude}"
                                             class="btn btn-primary">

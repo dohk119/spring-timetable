@@ -49,6 +49,12 @@ public class Schelude implements Serializable {
     @JoinColumn(name = "id_group")
     private Group group;
 
+
+    @ManyToOne()
+    @JoinColumn(name = "id_coach")
+    private Coach coach;
+
+
     /*
     Transforms time from input form into java.sql.Time
     The input type time is passed as string, this behavior generates a nullpointer
@@ -79,5 +85,6 @@ public class Schelude implements Serializable {
     public String getEnd_at(){
         return this.end_at.toString().substring(0,5);
     }
+
 
 }
