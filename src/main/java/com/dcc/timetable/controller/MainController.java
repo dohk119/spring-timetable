@@ -1,6 +1,7 @@
 package com.dcc.timetable.controller;
 
 import com.dcc.timetable.dao.CoachDao;
+import com.dcc.timetable.dao.GroupDao;
 import com.dcc.timetable.domain.*;
 import com.dcc.timetable.service.CoachService;
 import com.dcc.timetable.service.GroupService;
@@ -8,6 +9,8 @@ import com.dcc.timetable.service.LocationService;
 import com.dcc.timetable.service.ScheludeService;
 import com.dcc.timetable.service.ZoneService;
 
+import java.util.Calendar;
+import java.util.TimeZone;
 
 import javax.validation.Valid;
 
@@ -18,20 +21,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestParam;
-
 
 @Controller
 @Slf4j
 public class MainController {
 
     /*
-    Define mapping for the app pages
-    */
+     * Define mapping for the app pages
+     */
 
-    @Autowired 
+    @Autowired
     private CoachService coachService;
     @Autowired
     private GroupService groupService;
@@ -42,46 +43,89 @@ public class MainController {
     @Autowired
     private ScheludeService scheludeService;
 
-    //Map to index
+    // Map to index
     @GetMapping("/")
-    public String index(){
+    public String index() {
 
         log.info("Dentro de index");
         return "index";
 
     }
 
-    //Map to config timetables
-    @GetMapping({"/config", "/config/timetables"})
-    public String config(Model model){
-    
-        model.addAttribute("section","timetables");
-        log.info("Dentro de config");
-        return "config";
-            
+    @GetMapping("/group/{idGroup}")
+    public String groupInfo(Model model) {
+
+        // Get current week of the year
+        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+        // calendar.set(2022, 0, 2);
+        int weekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
+        int mod = weekOfYear % 4;
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+
+        log.info("TODAY ----> " + weekOfYear);
+        log.info("MOD ----> " + mod);
+        log.info("DAY ----> " + day);
+
+        var groups = groupService.listGroups(mod);
+
+        log.info("size----> " + groups.size());
+
+        /*
+         * If mod is 0 -> week 4
+         * mod is 1 -> week 1
+         * mod is 2 -> week 2
+         * mod is 3 -> week 3
+         * 
+         */
+
+        // Load all records of one group
+        // Filter by week, then by day of week
+
+        return "index";
     }
 
+    // Map to config timetables
+    @GetMapping({ "/config", "/config/timetables" })
+    public String config(Model model) {
+        /*
+         * model.addAttribute("section","timetables");
+         * log.info("Dentro de config");
+         * return "config";
+         */
+        var scheludes = scheludeService.listScheludes();
+        var zones = zoneService.listZones();
+        var groups = groupService.listGroups();
+        var coaches = coachService.listCoaches();
 
-    //Map to config coaches
+        model.addAttribute("scheludes", scheludes);
+        model.addAttribute("zones", zones);
+        model.addAttribute("groups", groups);
+        model.addAttribute("coaches", coaches);
+        model.addAttribute("section", "scheludes"); // Used for section loading
+        log.info("Dentro de Scheludes");
+        return "config";
+    }
+
+    // Map to config coaches
     @GetMapping("/config/coaches")
-    public String configCoaches(Model model){
+    public String configCoaches(Model model) {
         var coaches = coachService.listCoaches();
 
         model.addAttribute("coaches", coaches);
-        model.addAttribute("section","coaches");
+        model.addAttribute("section", "coaches");
         log.info("Dentro de config");
         return "config";
-        
+
     }
 
-    //Map to config timetables
+    // Map to config timetables
     @GetMapping("/addnewcoach")
-    public String addNewCoach(Model model){
-    
-        //model.addAttribute("section","coaches");
+    public String addNewCoach(Model model) {
+
+        // model.addAttribute("section","coaches");
         log.info("Dentro de addNewCoach");
         return "addnewcoach";
-            
+
     }
 
     @GetMapping("/config/coaches/{idCoach}")
@@ -91,11 +135,10 @@ public class MainController {
         return "modifycoach";
     }
 
-
     @PostMapping("/config/savecoach")
-    public String saveCoach(@Valid Coach coach, Errors errors){
+    public String saveCoach(@Valid Coach coach, Errors errors) {
 
-        if(errors.hasErrors()){
+        if (errors.hasErrors()) {
             log.info("Errors founded!!!");
         }
 
@@ -103,34 +146,33 @@ public class MainController {
         return "redirect:/config/coaches";
     }
 
-
     @GetMapping("/config/coaches/delete/{idCoach}")
-    public String deleteCoach(Coach coach){
+    public String deleteCoach(Coach coach) {
 
         coachService.delete(coach);
         return "redirect:/config/coaches";
 
     }
 
-    //Groups mapping
+    // Groups mapping
 
     @GetMapping("/config/groups")
-    public String configGroups(Model model){
+    public String configGroups(Model model) {
 
-        var locations = locationService.listLocations();    //Load locations for the select in the modal add form
+        var locations = locationService.listLocations(); // Load locations for the select in the modal add form
         var groups = groupService.listGroups();
         model.addAttribute("locations", locations);
         model.addAttribute("groups", groups);
-        model.addAttribute("section","groups");     //Used for section loading
+        model.addAttribute("section", "groups"); // Used for section loading
         log.info("Dentro de Groups");
         return "config";
-        
+
     }
 
     @PostMapping("/config/savegroup")
-    public String saveGroup(@Valid Group group, Errors errors){
+    public String saveGroup(@Valid Group group, Errors errors) {
 
-        if(errors.hasErrors()){
+        if (errors.hasErrors()) {
             log.info("Errors founded!!!");
         }
 
@@ -144,44 +186,44 @@ public class MainController {
         group = groupService.findGroup(group);
         model.addAttribute("locations", locations);
         model.addAttribute("group", group);
-        model.addAttribute("section","editgroup");     //Used for section loading
+        model.addAttribute("section", "editgroup"); // Used for section loading
         return "config";
     }
 
     @GetMapping("/config/groups/delete/{idGroup}")
-    public String deleteCoach(Group group){
+    public String deleteCoach(Group group) {
 
         groupService.delete(group);
         return "redirect:/config/groups";
 
     }
-  
-   //Locations 
 
-   @GetMapping("/config/locations")
-   public String configLocations(Model model){
-       var locations = locationService.listLocations();
+    // Locations
 
-       model.addAttribute("locations", locations);
-       model.addAttribute("section","locations");     //Used for section loading
-       log.info("Dentro de Locations");
-       return "config";
-       
-   }
+    @GetMapping("/config/locations")
+    public String configLocations(Model model) {
+        var locations = locationService.listLocations();
 
-   @GetMapping("/config/locations/{idLocation}")
-   public String editLocation(Location location, Model model){
+        model.addAttribute("locations", locations);
+        model.addAttribute("section", "locations"); // Used for section loading
+        log.info("Dentro de Locations");
+        return "config";
+
+    }
+
+    @GetMapping("/config/locations/{idLocation}")
+    public String editLocation(Location location, Model model) {
 
         location = locationService.findLocation(location);
         model.addAttribute("location", location);
         model.addAttribute("section", "editlocation");
         return "config";
-   }
+    }
 
-   @PostMapping("/config/savelocation")
-    public String saveGroup(@Valid Location location, Errors errors){
+    @PostMapping("/config/savelocation")
+    public String saveGroup(@Valid Location location, Errors errors) {
 
-        if(errors.hasErrors()){
+        if (errors.hasErrors()) {
             log.info("Errors founded!!!");
         }
 
@@ -190,28 +232,28 @@ public class MainController {
     }
 
     @GetMapping("/config/locations/delete/{idLocation}")
-    public String deleteLocation(Location location){
+    public String deleteLocation(Location location) {
 
         locationService.delete(location);
         return "redirect:/config/locations";
 
     }
 
-    //Zones
+    // Zones
 
     @GetMapping("/config/zones")
-    public String configZones(Model model){
+    public String configZones(Model model) {
         var zones = zoneService.listZones();
 
         model.addAttribute("zones", zones);
-        model.addAttribute("section","zones");     //Used for section loading
+        model.addAttribute("section", "zones"); // Used for section loading
         log.info("Dentro de Zones");
         return "config";
-       
+
     }
 
     @GetMapping("/config/zones/{idZone}")
-    public String editZone(Zone zone, Model model){
+    public String editZone(Zone zone, Model model) {
 
         zone = zoneService.findZone(zone);
         model.addAttribute("zone", zone);
@@ -219,10 +261,10 @@ public class MainController {
         return "config";
     }
 
-   @PostMapping("/config/savezone")
-    public String saveZone(@Valid Zone zone, Errors errors){
+    @PostMapping("/config/savezone")
+    public String saveZone(@Valid Zone zone, Errors errors) {
 
-        if(errors.hasErrors()){
+        if (errors.hasErrors()) {
             log.info("Errors founded!!!");
         }
 
@@ -231,18 +273,17 @@ public class MainController {
     }
 
     @GetMapping("/config/zones/delete/{idZone}")
-    public String deleteZone(Zone zone){
+    public String deleteZone(Zone zone) {
 
         zoneService.delete(zone);
         return "redirect:/config/zones";
 
     }
 
-
-    //Mapping scheludes
+    // Mapping scheludes
 
     @GetMapping("/config/scheludes")
-    public String configScheludes(Model model){
+    public String configScheludes(Model model) {
         var scheludes = scheludeService.listScheludes();
         var zones = zoneService.listZones();
         var groups = groupService.listGroups();
@@ -252,14 +293,14 @@ public class MainController {
         model.addAttribute("zones", zones);
         model.addAttribute("groups", groups);
         model.addAttribute("coaches", coaches);
-        model.addAttribute("section","scheludes");     //Used for section loading
+        model.addAttribute("section", "scheludes"); // Used for section loading
         log.info("Dentro de Scheludes");
         return "config";
-       
+
     }
 
     @GetMapping("/config/scheludes/{idSchelude}")
-    public String editSchelude(Schelude schelude, Model model){
+    public String editSchelude(Schelude schelude, Model model) {
 
         schelude = scheludeService.findSchelude(schelude);
         var zones = zoneService.listZones();
@@ -274,28 +315,22 @@ public class MainController {
     }
 
     @PostMapping("/config/saveschelude")
-    public String saveSchelude(@Valid Schelude schelude, Errors errors){
+    public String saveSchelude(@Valid Schelude schelude, Errors errors) {
 
-        if(errors.hasErrors()){
+        if (errors.hasErrors()) {
             log.info("Errors founded!!!");
         }
-
 
         scheludeService.save(schelude);
         return "redirect:/config/scheludes";
     }
 
-    
     @GetMapping("/config/scheludes/delete/{idSchelude}")
-    public String deleteSchelude(Schelude schelude){
+    public String deleteSchelude(Schelude schelude) {
 
         scheludeService.delete(schelude);
         return "redirect:/config/scheludes";
 
     }
 
-
-
-
-    
 }

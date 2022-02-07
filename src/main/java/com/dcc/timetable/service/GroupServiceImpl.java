@@ -24,6 +24,14 @@ public class GroupServiceImpl implements GroupService{
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<Group> listGroups(int week) {
+       
+        return (List<Group>)groupDao.findAll(week);
+
+    }
+
+    @Override
     @Transactional()
     public void save(Group group) {
 

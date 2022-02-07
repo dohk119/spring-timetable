@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.NumberFormat;
 
 import lombok.Data;
 
@@ -21,6 +24,13 @@ public class Location implements Serializable{
     @NotEmpty
     @Column(name = "location_name")
     private String name;
+
+    @NotNull
+    @NumberFormat
+    @Column(name = "week")
+    private int week;
+
+
 
 
     public String getName(){

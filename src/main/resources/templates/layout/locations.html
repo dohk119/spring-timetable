@@ -21,6 +21,7 @@
                         <tr>
                             <th>[[#{locations.tablehead.id}]]</th>
                             <th>[[#{locations.tablehead.name}]]</th>
+                            <th>[[#{locations.tablehead.week}]]</th>
                             <th>[[#{actions.edit}]]</th>
                             <th>[[#{actions.delete}]]</th>
                         </tr>
@@ -29,6 +30,7 @@
                         <tr>
                             <th>[[#{locations.tablehead.id}]]</th>
                             <th>[[#{locations.tablehead.name}]]</th>
+                            <th>[[#{locations.tablehead.week}]]</th>
                             <th>[[#{actions.edit}]]</th>
                             <th>[[#{actions.delete}]]</th>
                         </tr>
@@ -37,6 +39,7 @@
                         <tr th:each="location, counter : ${locations}">
                             <td>[[${counter.count}]]</td>
                             <td>[[${location.name}]]</td>
+                            <td>[[${location.week}]]</td>
                             <td>
                                 <a th:href="@{/config/locations/} + ${location.idLocation}"
                                             class="btn btn-primary">

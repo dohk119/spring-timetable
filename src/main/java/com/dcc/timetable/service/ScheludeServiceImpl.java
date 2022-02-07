@@ -22,6 +22,7 @@ public class ScheludeServiceImpl implements ScheludeService {
         return (List<Schelude>)scheludeDao.findAll();
     }
 
+
     @Override
     @Transactional()
     public void save(Schelude schelude) {

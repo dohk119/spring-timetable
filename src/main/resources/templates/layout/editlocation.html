@@ -18,6 +18,12 @@
                         <input type="text" class="form-control" name="name" required="true" th:field="*{name}" />
                     </div>
                 </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="week">[[#{locations.tablehead.week}]]</label>
+                        <input type="number" min="0" class="form-control" name="week" required="true" th:field="*{week}" />
+                    </div>
+                </div>
                 <div class="card-footer">
                     <a href="/config/locations" class="btn btn-secondary" role="button">[[#{actions.close}]]</a>
                     <button type="submit" class="btn btn-primary">[[#{actions.save}]]</button>
