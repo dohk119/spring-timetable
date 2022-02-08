@@ -1,21 +1,21 @@
-<section th:fragment="scheludes">
+<section th:fragment="schedules">
     <div class="container-fluid px-4">
-        <h1 class="mt-4">[[#{scheludes.subtitle}]]</h1>
+        <h1 class="mt-4">[[#{schedules.subtitle}]]</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-            <li class="breadcrumb-item active">[[#{scheludes.subtitle}]]</li>
+            <li class="breadcrumb-item active">[[#{schedules.subtitle}]]</li>
         </ol>
         
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>
-                [[#{scheludes.description}]]
+                [[#{schedules.description}]]
             </div>
             <div class="card-body">
                 
                 <!-- Button and modal for add new coach form-->
                 
-                <section th:include="layout/addnewschelude"></section>
+                <section th:include="layout/addnewschedule"></section>
                 <!-- 
                 <section th:include="layout/selectcoach"></section>
                 -->
@@ -24,38 +24,38 @@
                 <table id="datatablesSimple">
                     <thead>
                         <tr>
-                            <th>[[#{scheludes.tablehead.id}]]</th>
-                            <th>[[#{scheludes.tablehead.group}]]</th>
-                            <th>[[#{scheludes.tablehead.day}]]</th>
-                            <th>[[#{scheludes.tablehead.week}]]</th>
-                            <th>[[#{scheludes.tablehead.start}]]</th>
-                            <th>[[#{scheludes.tablehead.end}]]</th>
-                            <th>[[#{scheludes.tablehead.zone}]]</th>
-                            <th>[[#{scheludes.tablehead.coach}]]</th>
+                            <th>[[#{schedules.tablehead.id}]]</th>
+                            <th>[[#{schedules.tablehead.group}]]</th>
+                            <th>[[#{schedules.tablehead.day}]]</th>
+                            <th>[[#{schedules.tablehead.week}]]</th>
+                            <th>[[#{schedules.tablehead.start}]]</th>
+                            <th>[[#{schedules.tablehead.end}]]</th>
+                            <th>[[#{schedules.tablehead.zone}]]</th>
+                            <th>[[#{schedules.tablehead.coach}]]</th>
                             <th>[[#{actions.edit}]]</th>
                             <th>[[#{actions.delete}]]</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>[[#{scheludes.tablehead.id}]]</th>
-                            <th>[[#{scheludes.tablehead.group}]]</th>
-                            <th>[[#{scheludes.tablehead.day}]]</th>
-                            <th>[[#{scheludes.tablehead.week}]]</th>
-                            <th>[[#{scheludes.tablehead.start}]]</th>
-                            <th>[[#{scheludes.tablehead.end}]]</th>
-                            <th>[[#{scheludes.tablehead.zone}]]</th>
-                            <th>[[#{scheludes.tablehead.coach}]]</th>
+                            <th>[[#{schedules.tablehead.id}]]</th>
+                            <th>[[#{schedules.tablehead.group}]]</th>
+                            <th>[[#{schedules.tablehead.day}]]</th>
+                            <th>[[#{schedules.tablehead.week}]]</th>
+                            <th>[[#{schedules.tablehead.start}]]</th>
+                            <th>[[#{schedules.tablehead.end}]]</th>
+                            <th>[[#{schedules.tablehead.zone}]]</th>
+                            <th>[[#{schedules.tablehead.coach}]]</th>
                             <th>[[#{actions.edit}]]</th>
                             <th>[[#{actions.delete}]]</th>
                         </tr>
                     </tfoot>
                     <tbody>
-                        <tr th:each="schelude, counter : ${scheludes}">
+                        <tr th:each="schedule, counter : ${schedules}">
                             <td>[[${counter.count}]]</td>
-                            <td>[[${schelude.group.name}]]</td>
-                            <!-- <td>[[${schelude.day_of_week}]]</td>-->
-                            <td th:switch="${schelude.day_of_week}">
+                            <td>[[${schedule.group.name}]]</td>
+                            <!-- <td>[[${schedule.day_of_week}]]</td>-->
+                            <td th:switch="${schedule.day_of_week}">
                                 <span th:case="0">[[#{days.monday}]]</span>
                                 <span th:case="1">[[#{days.tuesday}]]</span>
                                 <span th:case="2">[[#{days.thursday}]]</span>
@@ -64,19 +64,19 @@
                                 <span th:case="5">[[#{days.saturday}]]</span>
                                 <span th:case="6">[[#{days.sunday}]]</span>
                             </td>
-                            <td>[[${schelude.week}]]</td>
-                            <td>[[${schelude.start_at}]]</td>
-                            <td>[[${schelude.end_at}]]</td>
-                            <td>[[${schelude.zone.name}]]</td>
-                            <td>[[${schelude?.coach?.name}]]</td>
+                            <td>[[${schedule.week}]]</td>
+                            <td>[[${schedule.start_at}]]</td>
+                            <td>[[${schedule.end_at}]]</td>
+                            <td>[[${schedule.zone.name}]]</td>
+                            <td>[[${schedule?.coach?.name}]]</td>
                             <td>
-                                <a th:href="@{/config/scheludes/} + ${schelude.idSchelude}"
+                                <a th:href="@{/config/schedules/} + ${schedule.idSchedule}"
                                             class="btn btn-primary">
                                     <i class="fas fa-angle-double-right"></i> [[#{actions.edit}]]
                                 </a>
                             </td>
                             <td>
-                                <a th:href="@{/config/scheludes/delete/} + ${schelude.idSchelude}"
+                                <a th:href="@{/config/schedules/delete/} + ${schedule.idSchedule}"
                                             class="btn btn-danger">
                                     <i class="fas fa-angle-double-right"></i> [[#{actions.delete}]]
                                 </a>

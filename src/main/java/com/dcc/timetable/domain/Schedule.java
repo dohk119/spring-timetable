@@ -5,24 +5,22 @@ import java.io.Serializable;
 import java.sql.Time;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "scheludes")
-public class Schelude implements Serializable {
+@Table(name = "schedules")
+public class Schedule implements Serializable {
 
     private static final Long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idSchelude;
+    private Long idSchedule;
 
     @NotNull
     @DateTimeFormat(pattern = "HH:mm")
@@ -39,18 +37,18 @@ public class Schelude implements Serializable {
     private int week;
 
     @NotNull
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "id_zone")
     private Zone zone;
 
 
     @NotNull
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "id_group")
     private Group group;
 
 
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "id_coach")
     private Coach coach;
 

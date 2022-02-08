@@ -1,15 +1,15 @@
 package com.dcc.timetable.controller;
 
-import com.dcc.timetable.dao.CoachDao;
-import com.dcc.timetable.dao.GroupDao;
 import com.dcc.timetable.domain.*;
 import com.dcc.timetable.service.CoachService;
 import com.dcc.timetable.service.GroupService;
 import com.dcc.timetable.service.LocationService;
-import com.dcc.timetable.service.ScheludeService;
+import com.dcc.timetable.service.ScheduleService;
 import com.dcc.timetable.service.ZoneService;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 
 import javax.validation.Valid;
@@ -22,7 +22,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @Slf4j
@@ -41,7 +40,7 @@ public class MainController {
     @Autowired
     private ZoneService zoneService;
     @Autowired
-    private ScheludeService scheludeService;
+    private ScheduleService scheduleService;
 
     // Map to index
     @GetMapping("/")
@@ -53,23 +52,24 @@ public class MainController {
     }
 
     @GetMapping("/group/{idGroup}")
-    public String groupInfo(Model model) {
+    public String groupInfo(Group group, Model model) {
 
         // Get current week of the year
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-        // calendar.set(2022, 0, 2);
         int weekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
-        int mod = weekOfYear % 4;
+        int week = weekOfYear % 4;
         int day = calendar.get(Calendar.DAY_OF_WEEK);
 
-        log.info("TODAY ----> " + weekOfYear);
-        log.info("MOD ----> " + mod);
-        log.info("DAY ----> " + day);
+        
+        var schedules = scheduleService.listSchedules(group);
+        log.info("size----> " + schedules.size());
+/*
+        ArrayList<List<schedule>> weekschedules = new ArrayList<List<schedule>>();
 
-        var groups = groupService.listGroups(mod);
-
-        log.info("size----> " + groups.size());
-
+        for(schedule schedule : schedules){
+            List<schedule> temp = new List<schedule>();
+        }
+        */
         /*
          * If mod is 0 -> week 4
          * mod is 1 -> week 1
@@ -77,10 +77,15 @@ public class MainController {
          * mod is 3 -> week 3
          * 
          */
+        log.info("TODAY ----> " + weekOfYear);
+        log.info("MOD ----> " + week);
+        log.info("DAY ----> " + day);
 
         // Load all records of one group
         // Filter by week, then by day of week
-
+        model.addAttribute("schedules", schedules);
+        model.addAttribute("section", "groupinfo");
+        
         return "index";
     }
 
@@ -92,17 +97,17 @@ public class MainController {
          * log.info("Dentro de config");
          * return "config";
          */
-        var scheludes = scheludeService.listScheludes();
+        var schedules = scheduleService.listSchedules();
         var zones = zoneService.listZones();
         var groups = groupService.listGroups();
         var coaches = coachService.listCoaches();
 
-        model.addAttribute("scheludes", scheludes);
+        model.addAttribute("schedules", schedules);
         model.addAttribute("zones", zones);
         model.addAttribute("groups", groups);
         model.addAttribute("coaches", coaches);
-        model.addAttribute("section", "scheludes"); // Used for section loading
-        log.info("Dentro de Scheludes");
+        model.addAttribute("section", "schedules"); // Used for section loading
+        log.info("Dentro de schedules");
         return "config";
     }
 
@@ -280,56 +285,56 @@ public class MainController {
 
     }
 
-    // Mapping scheludes
+    // Mapping schedules
 
-    @GetMapping("/config/scheludes")
-    public String configScheludes(Model model) {
-        var scheludes = scheludeService.listScheludes();
+    @GetMapping("/config/schedules")
+    public String configschedules(Model model) {
+        var schedules = scheduleService.listSchedules();
         var zones = zoneService.listZones();
         var groups = groupService.listGroups();
         var coaches = coachService.listCoaches();
 
-        model.addAttribute("scheludes", scheludes);
+        model.addAttribute("schedules", schedules);
         model.addAttribute("zones", zones);
         model.addAttribute("groups", groups);
         model.addAttribute("coaches", coaches);
-        model.addAttribute("section", "scheludes"); // Used for section loading
-        log.info("Dentro de Scheludes");
+        model.addAttribute("section", "schedules"); // Used for section loading
+        log.info("Dentro de schedules");
         return "config";
 
     }
 
-    @GetMapping("/config/scheludes/{idSchelude}")
-    public String editSchelude(Schelude schelude, Model model) {
+    @GetMapping("/config/schedules/{idSchedule}")
+    public String editschedule(Schedule schedule, Model model) {
 
-        schelude = scheludeService.findSchelude(schelude);
+        schedule = scheduleService.findSchedule(schedule);
         var zones = zoneService.listZones();
         var groups = groupService.listGroups();
         var coaches = coachService.listCoaches();
-        model.addAttribute("schelude", schelude);
+        model.addAttribute("schedule", schedule);
         model.addAttribute("zones", zones);
         model.addAttribute("groups", groups);
         model.addAttribute("coaches", coaches);
-        model.addAttribute("section", "editschelude");
+        model.addAttribute("section", "editschedule");
         return "config";
     }
 
-    @PostMapping("/config/saveschelude")
-    public String saveSchelude(@Valid Schelude schelude, Errors errors) {
+    @PostMapping("/config/saveschedule")
+    public String saveschedule(@Valid Schedule schedule, Errors errors) {
 
         if (errors.hasErrors()) {
             log.info("Errors founded!!!");
         }
 
-        scheludeService.save(schelude);
-        return "redirect:/config/scheludes";
+        scheduleService.save(schedule);
+        return "redirect:/config/schedules";
     }
 
-    @GetMapping("/config/scheludes/delete/{idSchelude}")
-    public String deleteSchelude(Schelude schelude) {
+    @GetMapping("/config/schedules/delete/{idSchedule}")
+    public String deleteschedule(Schedule schedule) {
 
-        scheludeService.delete(schelude);
-        return "redirect:/config/scheludes";
+        scheduleService.delete(schedule);
+        return "redirect:/config/schedules";
 
     }
 

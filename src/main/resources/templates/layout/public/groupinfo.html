@@ -1,0 +1,52 @@
+<section th:fragment="groupinfo">
+
+<!-- <th:block th:each="i: ${#numbers.sequence(0, 6)}">  -->
+
+  <div class="container" th:each="schedule : ${schedules}">
+
+    <div class="d-flex aligns-items-center justify-content-center pt-5">
+        <div class="card text-center text-white bg-success mb-3" style="width: 18rem; max-width: 18rem;">
+            <div class="card-header">[[${schedule.group.name}]] </div>
+            <div class="card-body">
+                <h5 class="card-title">[[${schedule.zone.name}]]</h5>
+                <p class="card-text">[[${schedule.start_at}]] a [[${schedule.end_at}]] </p>
+            </div>
+            <div class="card-footer">
+                Instalación - [[${schedule.day_of_week}]]
+            </div>
+        </div>
+    </div>
+
+<!-- </th:block> -->
+<!--
+    <div class="d-flex aligns-items-center justify-content-center pt-5">
+        <div class="card text-center text-black bg-warning mb-3" style="width: 18rem; max-width: 18rem;">
+            <div class="card-header">ESCUELA 5-4</div>
+            <div class="card-body">
+                <h5 class="card-title">Aparato</h5>
+                <p class="card-text">10:30 a 11:00</p>
+            </div>
+            <div class="card-footer">
+                Instalación
+            </div>
+        </div>
+       
+    </div>
+
+    <div class="d-flex aligns-items-center justify-content-center pt-5">
+        <div class="card text-center text-white bg-danger mb-3" style="width: 18rem; max-width: 18rem;">
+            <div class="card-header">ESCUELA 5-4</div>
+            <div class="card-body">
+                <h5 class="card-title">Aparato</h5>
+                <p class="card-text">10:30 a 11:00</p>
+            </div>
+            <div class="card-footer">
+                Instalación
+            </div>
+        </div>
+       
+    </div>
+  -->
+    
+</div>
+</section>

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.annotations.Fetch;
 
 import lombok.Data;
 
@@ -21,7 +22,7 @@ public class Group implements Serializable{
     @NotEmpty
     private String name;
 
-    @ManyToOne()
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "id_location")
     private Location location;
 

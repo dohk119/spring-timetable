@@ -8,132 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Horarios Tempo</title>
-     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
-      <!-- <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}" />
- <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+    <title>[[#{main.title}]]</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 
-   -->
-    
     <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-
 </head>
 
 <body>
-
-    <div class="container">
-        <div class="row pt-3">
-            <div class="col order-last">
-                <button type="button" class="btn btn-primary btn-lg">
-                    >
-                </button>
-            </div>
-            <div class="col text-center">
-                Lun 10-Feb
-            </div>
-            <div class="col order-first">
-    
-                <button type="button" class="btn btn-primary btn-lg float-end">
-                    < 
-                </button>
-    
-            </div>
-        </div>
-    </div>
-        
-    <div class="container">
-        <div class="d-flex aligns-items-center justify-content-center pt-5">
-            <div class="card text-center text-white bg-success mb-3" style="width: 18rem; max-width: 18rem;">
-                <div class="card-header">ESCUELA 5-4</div>
-                <div class="card-body">
-                    <h5 class="card-title">Aparato</h5>
-                    <p class="card-text">10:30 a 11:00</p>
-                </div>
-                <div class="card-footer">
-                    Instalación
-                </div>
-            </div>
-           
-        </div>
-
-        <div class="d-flex aligns-items-center justify-content-center pt-5">
-            <div class="card text-center text-black bg-warning mb-3" style="width: 18rem; max-width: 18rem;">
-                <div class="card-header">ESCUELA 5-4</div>
-                <div class="card-body">
-                    <h5 class="card-title">Aparato</h5>
-                    <p class="card-text">10:30 a 11:00</p>
-                </div>
-                <div class="card-footer">
-                    Instalación
-                </div>
-            </div>
-           
-        </div>
-
-        <div class="d-flex aligns-items-center justify-content-center pt-5">
-            <div class="card text-center text-white bg-danger mb-3" style="width: 18rem; max-width: 18rem;">
-                <div class="card-header">ESCUELA 5-4</div>
-                <div class="card-body">
-                    <h5 class="card-title">Aparato</h5>
-                    <p class="card-text">10:30 a 11:00</p>
-                </div>
-                <div class="card-footer">
-                    Instalación
-                </div>
-            </div>
-           
-        </div>
-
-        
-    </div>
-
-
-
-
-    <!--
-    <div class="container ">
-        <div class="d-flex mt-3 mx-auto">
-        <h1>Instalaciónnn</h1>
-        </div>
-    </div>
-    <div class="container mt-3">
-        <div id="example-div" class="d-flex aligns-items-center justify-content-center ">
-            <div class="row">
-                <div class="col"><button type="button" class="btn-lg btn-primary">
-                        < </button>
-                </div>
-                <div class="col">
-                    <h4>Miércoles</h4>
-                   14-Feb
-                </div>
-                <div class="col"><button type="button" class="btn-lg btn-primary">></button></div>
-            </div>
-        </div>
-        <div class="d-flex aligns-items-center justify-content-center pt-5">
-            <div class="card text-center text-white bg-success mb-3" style="width: 18rem; max-width: 18rem;">
-                <div class="card-header">ESCUELA 5-4</div>
-                <div class="card-body">
-                    <h5 class="card-title">Aparato</h5>
-                    <p class="card-text">10:30 a 11:00</p>
-                </div>
-                <div class="card-footer">
-                    Instalación
-                </div>
-            </div>
-        </div>
-        <div class="d-flex aligns-items-center justify-content-center pt-5">
-            <div class="card text-center text-dark bg-warning mb-3" style="width: 18rem; max-width: 18rem;">
-                <div class="card-header">ESCUELA 5-4</div>
-                <div class="card-body">
-                    <h5 class="card-title">Aparato</h5>
-                    <p class="card-text">10:30 a 11:00</p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    -->
+    <header th:replace="layout/public/header :: header"></header>
+    <section th:include="~{${'layout/public/' + section} :: ${section}}"></section>
 
 
 </body>
