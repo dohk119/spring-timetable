@@ -9,6 +9,7 @@ import com.dcc.timetable.service.ZoneService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -62,6 +63,8 @@ public class MainController {
 
         
         var schedules = scheduleService.listSchedules(group);
+        //var schedules = scheduleService.listSchedules(group,week);
+
         log.info("size----> " + schedules.size());
 /*
         ArrayList<List<schedule>> weekschedules = new ArrayList<List<schedule>>();
@@ -78,12 +81,21 @@ public class MainController {
          * 
          */
         log.info("TODAY ----> " + weekOfYear);
-        log.info("MOD ----> " + week);
+        log.info("WEEK ----> " + week);
         log.info("DAY ----> " + day);
+
+        int offset = 0;
+/*
+        if(!schedules.isEmpty())
+            offset= schedules.get(0).getGroup().getLocation().getWeek();
+*/
+        //schedules.sort(null);
 
         // Load all records of one group
         // Filter by week, then by day of week
         model.addAttribute("schedules", schedules);
+        model.addAttribute("week", week);
+        //model.addAttribute("byStart", Comparator.comparing(Schedule::getWeek));
         model.addAttribute("section", "groupinfo");
         
         return "index";

@@ -24,11 +24,11 @@ public class Schedule implements Serializable {
 
     @NotNull
     @DateTimeFormat(pattern = "HH:mm")
-    private Time start_at;
+    private Time start;
 
     @NotNull
     @DateTimeFormat(pattern = "HH:mm")
-    private Time end_at;
+    private Time end;
 
     @NotNull
     private int day_of_week;
@@ -63,25 +63,25 @@ public class Schedule implements Serializable {
     the object value
 
     */
-    public void setStart_at(String temp){
+    public void setStart(String temp){
 
         temp = temp+":00";           
-        this.start_at = Time.valueOf(temp);
+        this.start = Time.valueOf(temp);
     }
 
-    public void setEnd_at(String temp){
+    public void setEnd(String temp){
         temp = temp+":00";
-        this.end_at = Time.valueOf(temp);
+        this.end = Time.valueOf(temp);
     }
 
     //Returns the java.sql.Time as string with format HH:mm
-    public String getStart_at(){
+    public String getStart(){
        
-        return start_at.toString().substring(0, 5);
+        return start.toString().substring(0, 5);
     }
 
-    public String getEnd_at(){
-        return this.end_at.toString().substring(0,5);
+    public String getEnd(){
+        return this.end.toString().substring(0,5);
     }
 
 

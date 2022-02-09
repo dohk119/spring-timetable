@@ -27,10 +27,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Transactional(readOnly = true)
     public List<Schedule> listSchedules(Group group) {
 
-        return (List<Schedule>)scheduleDao.findAll(group.getIdGroup());
-        
+        //return (List<Schedule>)scheduleDao.findAll(group.getIdGroup());
+        return (List<Schedule>) scheduleDao.findByGroupOrderByStart(group);
     }
-
 
     @Override
     @Transactional()

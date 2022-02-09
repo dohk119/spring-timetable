@@ -2,20 +2,24 @@
 
 <!-- <th:block th:each="i: ${#numbers.sequence(0, 6)}">  -->
 
-  <div class="container" th:each="schedule : ${schedules}">
-
-    <div class="d-flex aligns-items-center justify-content-center pt-5">
+<div class="container" th:each="schedule : ${schedules}"> 
+<!-- <div class="container" th:each="schedule, stat : ${#lists.sort(schedules,byStart)}"></div>   -->
+  
+    <!-- FILTER BY WEEK -->
+    <div class="d-flex aligns-items-center justify-content-center pt-5"
+        th:if="${schedule.week} == ${week - schedule.group.location.week} and true">
         <div class="card text-center text-white bg-success mb-3" style="width: 18rem; max-width: 18rem;">
             <div class="card-header">[[${schedule.group.name}]] </div>
             <div class="card-body">
                 <h5 class="card-title">[[${schedule.zone.name}]]</h5>
-                <p class="card-text">[[${schedule.start_at}]] a [[${schedule.end_at}]] </p>
+                <p class="card-text">[[${schedule.start}]] a [[${schedule.end}]] </p>
             </div>
             <div class="card-footer">
-                Instalación - [[${schedule.day_of_week}]]
+                [[${schedule.group.location.name}]] - [[${schedule.day_of_week}]] - [[${schedule.week}]]
             </div>
         </div>
     </div>
+
 
 <!-- </th:block> -->
 <!--
