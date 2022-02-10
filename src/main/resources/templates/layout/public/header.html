@@ -2,18 +2,21 @@
   <div class="container">
     <div class="row pt-3">
       <div class="col order-last">
-        <button type="button" class="btn btn-primary btn-lg">
+        <button type="button" class="btn btn-primary btn-lg" onclick="nextDay()">
           >
         </button>
       </div>
-      <div class="col text-center">
-        Lun 10-Feb
+      <div id="date" class="col text-center">
+        <script>
+         
+          document.write(days[date.getDay()] + " - " + date.getDate() + " " + monthNames[date.getMonth()]);    
+        </script>
+
       </div>
       <div class="col order-first">
 
-        <button type="button" class="btn btn-primary btn-lg float-end">
-          < 
-        </button>
+        <button type="button" class="btn btn-primary btn-lg float-end" onclick="previousDay()">
+          < </button>
 
       </div>
     </div>

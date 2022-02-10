@@ -12,6 +12,68 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 
     <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+    <script>
+
+        const days = [
+                'Domingo',
+                'Lunes',
+                'Martes',
+                'Miercoles',
+                'Jueves',
+                'Viernes',
+                'Sábado',
+            ];
+
+            const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                "Julio", "Agosto", "Septiembre", "Octubre", "Novimbre", "Diciembre"
+            ];
+
+            const divNames = ["sun","mon","tue","thu","wed","fri","sat"];
+
+            let date = new Date();
+
+            function nextDay() {
+
+                let day = date.getDay();
+                if(day != 0) {
+                    date.setDate(date.getDate() + 1);
+                    let newDate = (days[date.getDay()] + " - " + date.getDate() + " " + monthNames[date.getMonth()]);
+                    document.getElementById('date').textContent = newDate;
+                    hideOrShow(date.getDay());
+                }
+                
+            }
+
+            function previousDay() {
+
+                let day = date.getDay();
+                if(day != 1) {
+                    date.setDate(date.getDate() - 1);
+                    let newDate = (days[date.getDay()] + " - " + date.getDate() + " " + monthNames[date.getMonth()]);
+                    document.getElementById('date').textContent = newDate;
+                    hideOrShow(date.getDay());
+                }
+            }
+
+            function hideOrShow(day){
+
+                document.getElementById(divNames[1]).classList.remove("d-none");
+                let c = divNames[1];
+
+                for(var i = 0; i<7; i++){
+                    if(i==day)
+                        document.getElementById(divNames[i]).classList.remove("d-none");
+                   else
+                        document.getElementById(divNames[i]).classList.add("d-none");
+                }
+
+            }
+
+
+
+    </script>
+
 </head>
 
 <body>

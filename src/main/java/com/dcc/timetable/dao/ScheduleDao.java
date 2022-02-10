@@ -24,7 +24,6 @@ public interface ScheduleDao extends JpaRepository<Schedule,Long>{
 
 //    @Query("select c from Schedule c join fetch c.zone join fetch c.group left join c.coach")
     @Query("select c from Schedule c join fetch c.zone join fetch c.group order by c.day_of_week asc, c.start asc")
-
     List<Schedule> findByGroupOrderByStart(Group group);
 
     List<Schedule> findByGroupAndWeek(Group group, int week);

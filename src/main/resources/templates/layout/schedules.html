@@ -56,13 +56,13 @@
                             <td>[[${schedule.group.name}]]</td>
                             <!-- <td>[[${schedule.day_of_week}]]</td>-->
                             <td th:switch="${schedule.day_of_week}">
-                                <span th:case="0">[[#{days.monday}]]</span>
-                                <span th:case="1">[[#{days.tuesday}]]</span>
-                                <span th:case="2">[[#{days.thursday}]]</span>
-                                <span th:case="3">[[#{days.wednesday}]]</span>
-                                <span th:case="4">[[#{days.friday}]]</span>
-                                <span th:case="5">[[#{days.saturday}]]</span>
-                                <span th:case="6">[[#{days.sunday}]]</span>
+                                <span th:case="1">[[#{days.monday}]]</span>
+                                <span th:case="2">[[#{days.tuesday}]]</span>
+                                <span th:case="3">[[#{days.thursday}]]</span>
+                                <span th:case="4">[[#{days.wednesday}]]</span>
+                                <span th:case="5">[[#{days.friday}]]</span>
+                                <span th:case="6">[[#{days.saturday}]]</span>
+                                <span th:case="0">[[#{days.sunday}]]</span>
                             </td>
                             <td>[[${schedule.week}]]</td>
                             <td>[[${schedule.start}]]</td>

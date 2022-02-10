@@ -55,11 +55,19 @@ public class MainController {
     @GetMapping("/group/{idGroup}")
     public String groupInfo(Group group, Model model) {
 
+        List<Schedule> mon = new ArrayList<Schedule>();
+        List<Schedule> tue = new ArrayList<Schedule>();
+        List<Schedule> thu = new ArrayList<Schedule>();
+        List<Schedule> wed = new ArrayList<Schedule>();
+        List<Schedule> fri = new ArrayList<Schedule>();
+        List<Schedule> sat = new ArrayList<Schedule>();
+        List<Schedule> sun = new ArrayList<Schedule>();
+
         // Get current week of the year
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         int weekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
         int week = weekOfYear % 4;
-        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        int day = calendar.get(Calendar.DAY_OF_WEEK);   //Current day of the week
 
         
         var schedules = scheduleService.listSchedules(group);
@@ -80,6 +88,34 @@ public class MainController {
          * mod is 3 -> week 3
          * 
          */
+
+        for(Schedule schedule : schedules){
+            switch(schedule.getDay_of_week()){
+                case 0:
+                    sun.add(schedule);
+                break;
+                case 1:
+                    mon.add(schedule);
+                break;
+                case 2:
+                    tue.add(schedule);
+                break;
+                case 3:
+                    thu.add(schedule);
+                break;
+                case 4:
+                    wed.add(schedule);
+                break;
+                case 5:
+                    fri.add(schedule);
+                break;
+                case 6:
+                    sat.add(schedule);
+                break;
+            }
+        }
+
+
         log.info("TODAY ----> " + weekOfYear);
         log.info("WEEK ----> " + week);
         log.info("DAY ----> " + day);
@@ -93,8 +129,16 @@ public class MainController {
 
         // Load all records of one group
         // Filter by week, then by day of week
-        model.addAttribute("schedules", schedules);
+        //model.addAttribute("schedules", schedules);
+        model.addAttribute("mon", mon);
+        model.addAttribute("tue", tue);
+        model.addAttribute("thu", thu);
+        model.addAttribute("wed", wed);
+        model.addAttribute("fri", fri);
+        model.addAttribute("sat", sat);
+        model.addAttribute("sun", sun);
         model.addAttribute("week", week);
+        model.addAttribute("day",day);
         //model.addAttribute("byStart", Comparator.comparing(Schedule::getWeek));
         model.addAttribute("section", "groupinfo");
         
