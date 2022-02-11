@@ -67,7 +67,7 @@ public class MainController {
         Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
         int weekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
         int week = weekOfYear % 4;
-        int day = calendar.get(Calendar.DAY_OF_WEEK);   //Current day of the week
+        int day = calendar.get(Calendar.DAY_OF_WEEK) -1;   //Current day of the week
 
         
         var schedules = scheduleService.listSchedules(group);
@@ -179,6 +179,7 @@ public class MainController {
 
     }
 
+    /*
     // Map to config timetables
     @GetMapping("/addnewcoach")
     public String addNewCoach(Model model) {
@@ -188,7 +189,7 @@ public class MainController {
         return "addnewcoach";
 
     }
-
+*/
     @GetMapping("/config/coaches/{idCoach}")
     public String editCoach(Coach coach, Model model) {
         coach = coachService.findCoach(coach);

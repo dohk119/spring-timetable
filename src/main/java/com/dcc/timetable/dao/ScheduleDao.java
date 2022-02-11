@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 public interface ScheduleDao extends JpaRepository<Schedule,Long>{
 
     //Prevent N+1 queries
-    @Query("select c from Schedule c join fetch c.zone join fetch c.group left join c.coach")
+    @Query("select c from Schedule c left join  c.zone join fetch c.group left join c.coach")
     List<Schedule> findAll();
 
     //    @Query("select c from Schelude c join fetch c.zone join fetch c.group left join c.coach where c.group.idGroup = :#{#idGroup}")

@@ -67,7 +67,7 @@
                             <td>[[${schedule.week}]]</td>
                             <td>[[${schedule.start}]]</td>
                             <td>[[${schedule.end}]]</td>
-                            <td>[[${schedule.zone.name}]]</td>
+                            <td>[[${schedule?.zone?.name}]]</td>
                             <td>[[${schedule?.coach?.name}]]</td>
                             <td>
                                 <a th:href="@{/config/schedules/} + ${schedule.idSchedule}"
